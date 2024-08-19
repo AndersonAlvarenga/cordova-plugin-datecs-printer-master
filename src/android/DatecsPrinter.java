@@ -8,6 +8,11 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 public class DatecsPrinter extends CordovaPlugin {
 	private DatecsSDKWrapper printer;
 
@@ -40,6 +45,37 @@ public class DatecsPrinter extends CordovaPlugin {
 		printer = new DatecsSDKWrapper(cordova);
 		printer.setWebView(webView);
 	}
+
+	    private static final int REQUEST_BLUETOOTH_CONNECT = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Verifique se a permissão já foi concedida
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Solicite a permissão
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                    REQUEST_BLUETOOTH_CONNECT);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_BLUETOOTH_CONNECT) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissão concedida, prossiga com a operação Bluetooth
+            } else {
+                // Permissão negada, informe ao usuário que a permissão é necessária
+            }
+        }
+    }
+}
+
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
