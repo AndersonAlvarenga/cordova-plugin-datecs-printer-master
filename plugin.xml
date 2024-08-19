@@ -28,6 +28,11 @@
 			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 			<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 			<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+			<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+			<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+			
+			
 		</config-file>
 
 		<lib-file src="src/android/com.datecs.api.jar" arch="device" />
