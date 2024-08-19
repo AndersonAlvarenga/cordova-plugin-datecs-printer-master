@@ -19,10 +19,10 @@
         connect: function(address, onSuccess, onError) {
         exec(onSuccess, onError, 'DatecsPrinter', 'connect', [address]);
         },
-        setPermissionScan: function (onSuccess, onError) {
+        setPermissionScan: function(onSuccess, onError) {
             exec(onSuccess, onError, 'DatecsPrinter', 'setPermissionScan', []);
         },
-        setPermissionConnect: function (onSuccess, onError) {
+        setPermissionConnect: function(onSuccess, onError) {
             exec(onSuccess, onError, 'DatecsPrinter', 'setPermissionConnect', []);
         },
         disconnect: function(onSuccess, onError) {
