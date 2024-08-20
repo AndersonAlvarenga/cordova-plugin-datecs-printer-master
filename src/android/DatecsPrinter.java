@@ -44,6 +44,9 @@ public class DatecsPrinter extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		printer.setCallbackContext(callbackContext);
+		checkPermission();
+
+
 
 		Option option = null;
 		try {
@@ -174,4 +177,22 @@ public class DatecsPrinter extends CordovaPlugin {
 		}
 		return true;
 	}
+	 public void checkPermission(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_BLUETOOTH_CONNECT);
+        } else {
+            // Permission is already granted, proceed with Bluetooth operations
+            // Your Bluetooth code here
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_SCAN}, REQUEST_BLUETOOTH_CONNECT);
+        } else {
+            // Permission is already granted, proceed with Bluetooth operations
+            // Your Bluetooth code here
+        }
+    }
+
 }
