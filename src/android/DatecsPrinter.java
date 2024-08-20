@@ -57,11 +57,15 @@ public class DatecsPrinter extends CordovaPlugin {
 		}
 		switch (option) {
 			case listBluetoothDevices:
-				
+			checkPermission();
+				Toast.makeText(this, "Entrou", Toast.LENGTH_SHORT).show();
 			BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			if (bluetoothAdapter == null) {
+				Toast.makeText(this, "Bluetooth Adapter Null", Toast.LENGTH_SHORT).show();
 				// O dispositivo não suporta Bluetooth
-			} else if (!bluetoothAdapter.isEnabled()) {
+			} 
+			if (!bluetoothAdapter.isEnabled()) {
+				Toast.makeText(this, "Bluetooth Enable", Toast.LENGTH_SHORT).show();
 				// Solicitar ao usuário para habilitar o Bluetooth
 				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 				checkPermission();
