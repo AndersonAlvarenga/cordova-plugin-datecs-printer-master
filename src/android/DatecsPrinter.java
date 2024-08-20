@@ -45,15 +45,6 @@ public class DatecsPrinter extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		printer.setCallbackContext(callbackContext);
 
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            // O dispositivo não suporta Bluetooth
-        } else if (!bluetoothAdapter.isEnabled()) {
-            // Solicitar ao usuário para habilitar o Bluetooth
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            checkPermission();
-            startActivityForResult(enableBtIntent, 0);
-        }
 
 
 
@@ -66,6 +57,17 @@ public class DatecsPrinter extends CordovaPlugin {
 		}
 		switch (option) {
 			case listBluetoothDevices:
+				
+			BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			if (bluetoothAdapter == null) {
+				// O dispositivo não suporta Bluetooth
+			} else if (!bluetoothAdapter.isEnabled()) {
+				// Solicitar ao usuário para habilitar o Bluetooth
+				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				checkPermission();
+				startActivityForResult(enableBtIntent, 0);
+			}
+
 				printer.getBluetoothPairedDevices(callbackContext);
 				break;
 			case setPermissionScan:
@@ -202,6 +204,14 @@ public class DatecsPrinter extends CordovaPlugin {
         } else {
             // Permission is already granted, proceed with Bluetooth operations
             // Your Bluetooth code here
+        }
+    }
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (bt.isEnabled()) {
+            Toast.makeText(this, "Bluetooth está ligado", Toast.LENGTH_SHORT).show();
+            checkPermission();
         }
     }
 
