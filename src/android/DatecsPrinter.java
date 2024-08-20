@@ -58,21 +58,7 @@ public class DatecsPrinter extends CordovaPlugin {
 		}
 		switch (option) {
 			case listBluetoothDevices:
-			checkPermission();
-				Toast.makeText(this, "Entrou", Toast.LENGTH_SHORT).show();
-			BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-			if (bluetoothAdapter == null) {
-				Toast.makeText(this, "Bluetooth Adapter Null", Toast.LENGTH_SHORT).show();
-				// O dispositivo não suporta Bluetooth
-			} 
-			if (!bluetoothAdapter.isEnabled()) {
-				Toast.makeText(this, "Bluetooth Enable", Toast.LENGTH_SHORT).show();
-				// Solicitar ao usuário para habilitar o Bluetooth
-				Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				checkPermission();
-				startActivityForResult(enableBtIntent, 0);
-			}
-
+			
 				printer.getBluetoothPairedDevices(callbackContext);
 				break;
 			case setPermissionScan:
@@ -194,30 +180,6 @@ public class DatecsPrinter extends CordovaPlugin {
 		}
 		return true;
 	}
-	 public void checkPermission(){
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted, request it
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_BLUETOOTH_CONNECT);
-        } else {
-            // Permission is already granted, proceed with Bluetooth operations
-            // Your Bluetooth code here
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted, request it
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_SCAN}, REQUEST_BLUETOOTH_CONNECT);
-        } else {
-            // Permission is already granted, proceed with Bluetooth operations
-            // Your Bluetooth code here
-        }
-    }
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (bt.isEnabled()) {
-            Toast.makeText(this, "Bluetooth está ligado", Toast.LENGTH_SHORT).show();
-            checkPermission();
-        }
-    }
+	 
 
 }
