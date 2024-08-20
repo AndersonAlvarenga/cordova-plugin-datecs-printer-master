@@ -44,7 +44,17 @@ public class DatecsPrinter extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		printer.setCallbackContext(callbackContext);
-		checkPermission();
+
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            // O dispositivo não suporta Bluetooth
+        } else if (!bluetoothAdapter.isEnabled()) {
+            // Solicitar ao usuário para habilitar o Bluetooth
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            checkPermission();
+            startActivityForResult(enableBtIntent, 0);
+        }
+
 
 
 
